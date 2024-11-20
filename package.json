@@ -1,0 +1,36 @@
+{
+  "name": "db2openapi",
+  "version": "1.0.0",
+  "description": "Generate an OpenAPI/Swagger specification from your SQL database",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zuplo-samples/db2openapi.git"
+  },
+  "keywords": [
+    "database",
+    "SQL",
+    "OpenAPI",
+    "Swagger"
+  ],
+  "author": "Zuplo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zuplo-samples/db2openapi/issues"
+  },
+  "homepage": "https://github.com/zuplo-samples/db2openapi#readme",
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@types/node": "^22.9.1",
+    "commander": "^12.1.0",
+    "openapi-types": "^12.1.3",
+    "pg": "^8.13.1",
+    "sequelize": "^6.37.5"
+  }
+}
