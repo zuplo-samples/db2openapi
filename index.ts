@@ -24,8 +24,10 @@ const generateOpenAPIDocument = async (
 ) => {
   try {
     await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
-
+  } catch (err) {
+    console.error("Unable to connect to Database:", err);
+  }
+  try {
     const models = await sequelize.getQueryInterface().showAllTables();
 
     const openApiDocument: OpenAPIV3_1.Document = {
@@ -66,15 +68,25 @@ const generateOpenAPIDocument = async (
       let primaryKey: string = "id";
       for (const attributeName in modelAttributes) {
         const attribute = modelAttributes[attributeName];
-        schema.properties[attributeName] = {
-          type: attribute.allowNull
-            ? [mapSequelizeTypeToOpenAPIType(attribute.type), "null"]
-            : mapSequelizeTypeToOpenAPIType(attribute.type),
-          format: mapSequelizeTypeToFormat(attribute.type),
-          default: attribute.defaultValue,
-          description: attribute.comment ?? undefined,
-          readOnly: attribute.primaryKey ? true : undefined,
-        };
+        const type = mapSequelizeTypeToOpenAPIType(attribute.type);
+        if (type === "array") {
+          schema.properties[attributeName] = {
+            type: "array",
+            items: {
+              type: "string",
+            },
+            description: attribute.comment ?? undefined,
+            readOnly: attribute.primaryKey ? true : undefined,
+          };
+        } else {
+          schema.properties[attributeName] = {
+            type: attribute.allowNull ? [type, "null"] : type,
+            format: mapSequelizeTypeToFormat(attribute.type),
+            default: attribute.defaultValue,
+            description: attribute.comment ?? undefined,
+            readOnly: attribute.primaryKey ? true : undefined,
+          };
+        }
         if (!attribute.allowNull) {
           required.push(attributeName);
         }
@@ -207,7 +219,7 @@ const generateOpenAPIDocument = async (
       `OpenAPI document has been generated and saved to ${outputFile}`
     );
   } catch (err) {
-    console.error("Unable to connect to the database:", err);
+    console.error("Error converting DB tables to OpenAPI:", err);
   } finally {
     await sequelize.close();
   }
@@ -216,7 +228,7 @@ const generateOpenAPIDocument = async (
 // Helper function to map Sequelize types to OpenAPI types
 const mapSequelizeTypeToOpenAPIType = (
   type: string
-): OpenAPIV3_1.NonArraySchemaObjectType => {
+): OpenAPIV3_1.NonArraySchemaObjectType | OpenAPIV3_1.ArraySchemaObjectType => {
   if (type.includes("INT")) {
     return "integer";
   } else if (
@@ -229,11 +241,17 @@ const mapSequelizeTypeToOpenAPIType = (
   } else if (
     type.includes("CHAR") ||
     type.includes("TEXT") ||
-    type.includes("DATE")
+    type.includes("DATE") ||
+    type.includes("STRING") ||
+    type.includes("CLOB")
   ) {
     return "string";
   } else if (type.includes("BOOLEAN")) {
     return "boolean";
+  } else if (type.includes("JSON")) {
+    return "object";
+  } else if (type.includes("ARRAY")) {
+    return "array";
   }
   return "string";
 };
@@ -242,14 +260,18 @@ const mapSequelizeTypeToOpenAPIType = (
 const mapSequelizeTypeToFormat = (type: string): string | undefined => {
   if (type.includes("INT")) {
     return "int32";
-  } else if (
-    type.includes("FLOAT") ||
-    type.includes("DOUBLE") ||
-    type.includes("DECIMAL")
-  ) {
+  } else if (type.includes("FLOAT") || type.includes("REAL")) {
     return "float";
+  } else if (type.includes("DATETIME") || type.includes("TIMESTAMP")) {
+    return "date-time";
   } else if (type.includes("DATE")) {
     return "date";
+  } else if (type.includes("TIME")) {
+    return "time";
+  } else if (type.includes("DOUBLE") || type.includes("DECIMAL")) {
+    return "double";
+  } else if (type.includes("UUID")) {
+    return "uuid";
   }
   return undefined;
 };
@@ -257,7 +279,7 @@ const mapSequelizeTypeToFormat = (type: string): string | undefined => {
 // CLI Configuration
 program
   .version("1.0.0")
-  .description("Generate OpenAPI documentation from a database using Sequelize")
+  .description("Generate OpenAPI documentation from a database")
   .requiredOption("-t, --type <type>", "Database type (e.g., postgres, mysql)")
   .requiredOption("-h, --host <host>", "Database host")
   .requiredOption("-p, --port <port>", "Database port", parseInt)

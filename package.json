@@ -7,6 +7,9 @@
     "test": "test",
     "build": "tsc"
   },
+  "bin": {
+    "db2openapi": "./bin/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zuplo-samples/db2openapi.git"
