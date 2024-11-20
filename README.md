@@ -42,15 +42,3 @@ db2openapi -t postgres -h aws-0-us-west-1.pooler.supabase.com -p 5432 -u postgre
 | `u` or `--username`  | Y        | Database username                                           |
 | `-P` or `--password` | Y        | Database password                                           |
 | `-o` or `--output`   | N        | Output file for the OpenAPI document. Default: openapi.json |
-
-.requiredOption("-t, --type <type>", "Database type (e.g., postgres, mysql)")
-.requiredOption("-h, --host <host>", "Database host")
-.requiredOption("-p, --port <port>", "Database port", parseInt)
-.requiredOption("-u, --username <username>", "Database username")
-.requiredOption("-P, --password <password>", "Database password")
-.requiredOption("-d, --database <database>", "Database name")
-.option(
-"-o, --output <file>",
-"Output file for the OpenAPI document",
-"openapi.json"
-)
