@@ -1,6 +1,6 @@
 # DB2OpenAPI
 
-Generate an OpenAPI/Swagger specification from your SQL database. The OpenAPI file will be written to a file.
+Generate an OpenAPI/Swagger specification from your SQL database. The OpenAPI spec will be written to a file.
 
 ## Motivation
 
