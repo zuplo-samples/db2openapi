@@ -4,7 +4,7 @@ Generate an OpenAPI/Swagger specification from your SQL database. The OpenAPI fi
 
 ## Motivation
 
-There are [several DB to API projects](https://github.com/dbohdan/automatic-api) out there, but they almost all lock you into building your API a certain way or using their managed service to get the full experience. I'd prefer to decouple the API definition from the API implementation - you are free to use your generated OpenAPI specification with any OpenAPI-compliant web framework (ex. Huma, tsoa, Connexion) and develop your DB-backed CRUD APIs with tools you're already familiar with / using.
+There are [several DB to API projects](https://github.com/dbohdan/automatic-api) out there, but they almost all lock you into building your API a certain way or using their managed service to get the full experience. I'd prefer to decouple the API definition from the API implementation - you are free to use your generated OpenAPI specification with any OpenAPI-compliant web framework (ex. Huma, tsoa, Connexion) and develop your DB-backed CRUD APIs with tools you're already familiar with / using. If you don't want to tie your API directly to your database, this is essentially a quickstart to building a CRUD API.
 
 ## Database Support
 
@@ -15,9 +15,7 @@ This project uses [Sequelize](https://sequelize.org/) under the hood, which supp
 - MySQL
 - MSSQL
 - SQLite
-- Snowflake
-- db2
-- ibmi
+- Oracle
 
 ## Local Installation
 
@@ -37,8 +35,9 @@ db2openapi -t postgres -h aws-0-us-west-1.pooler.supabase.com -p 5432 -u postgre
 | Option               | Required | Description                                                 |
 | -------------------- | -------- | ----------------------------------------------------------- |
 | `-t` or `--type`     | Y        | Database type (e.g., postgres, mysql)                       |
-| `-h` or --host`      | Y        | Database host                                               |
-| `p` or `--port`      | Y        | Database port                                               |
-| `u` or `--username`  | Y        | Database username                                           |
+| `-h` or `--host`     | Y        | Database host                                               |
+| `-p` or `--port`     | Y        | Database port                                               |
+| `-u` or `--username` | Y        | Database username                                           |
 | `-P` or `--password` | Y        | Database password                                           |
+| `-d` or `--database` | Y        | Database name                                               |
 | `-o` or `--output`   | N        | Output file for the OpenAPI document. Default: openapi.json |
