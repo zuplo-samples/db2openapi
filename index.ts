@@ -52,6 +52,14 @@ const generateOpenAPIDocument = async (
         .replaceAll(" ", "")
         .replaceAll("_", "")
         .replace(/(^\w|-\w)/g, (match) => match.replace("-", "").toUpperCase());
+      const isModelNamePlural = modelName.endsWith("s");
+      let modelNamePlural = modelName;
+      let modelNameSingular = modelName;
+      if (isModelNamePlural) {
+        modelNameSingular = modelName.slice(0, -1);
+      } else {
+        modelNamePlural = modelName + "s";
+      }
 
       const modelAttributes = await sequelize
         .getQueryInterface()
@@ -104,10 +112,10 @@ const generateOpenAPIDocument = async (
       openApiDocument.paths = {};
       openApiDocument.paths[`/${modelNameKebabCase}`] = {
         get: {
-          summary: `Get list of ${modelName}`,
+          summary: `Get list of ${modelNamePlural}`,
           responses: {
             "200": {
-              description: `A list of ${modelName}`,
+              description: `A list of ${modelNamePlural}`,
               content: {
                 "application/json": {
                   schema: {
@@ -122,7 +130,7 @@ const generateOpenAPIDocument = async (
           },
         },
         post: {
-          summary: `Create a new ${modelName}`,
+          summary: `Create a new ${modelNameSingular}`,
           requestBody: {
             content: {
               "application/json": {
@@ -134,7 +142,7 @@ const generateOpenAPIDocument = async (
           },
           responses: {
             "201": {
-              description: `${modelName} created successfully`,
+              description: `${modelNameSingular} created successfully`,
             },
           },
         },
@@ -142,7 +150,7 @@ const generateOpenAPIDocument = async (
 
       openApiDocument.paths[`/${modelNameKebabCase}/{${primaryKey}}`] = {
         get: {
-          summary: `Get a specific ${modelName} by ${primaryKey}`,
+          summary: `Get a specific ${modelNameSingular} by ${primaryKey}`,
           parameters: [
             {
               name: `${primaryKey}`,
@@ -155,7 +163,7 @@ const generateOpenAPIDocument = async (
           ],
           responses: {
             "200": {
-              description: `A single ${modelName}`,
+              description: `A single ${modelNameSingular}`,
               content: {
                 "application/json": {
                   schema: {
@@ -164,10 +172,13 @@ const generateOpenAPIDocument = async (
                 },
               },
             },
+            "404": {
+              description: `${modelNameSingular} not found`,
+            },
           },
         },
         put: {
-          summary: `Update a specific ${modelName} by ${primaryKey}`,
+          summary: `Update a specific ${modelNameSingular} by ${primaryKey}`,
           parameters: [
             {
               name: `${primaryKey}`,
@@ -189,12 +200,15 @@ const generateOpenAPIDocument = async (
           },
           responses: {
             "200": {
-              description: `${modelName} updated successfully`,
+              description: `${modelNameSingular} updated successfully`,
+            },
+            "404": {
+              description: `${modelNameSingular} not found`,
             },
           },
         },
         delete: {
-          summary: `Delete a specific ${modelName} by ${primaryKey}`,
+          summary: `Delete a specific ${modelNameSingular} by ${primaryKey}`,
           parameters: [
             {
               name: `${primaryKey}`,
@@ -207,7 +221,10 @@ const generateOpenAPIDocument = async (
           ],
           responses: {
             "200": {
-              description: `${modelName} deleted successfully`,
+              description: `${modelNameSingular} deleted successfully`,
+            },
+            "404": {
+              description: `${modelNameSingular} not found`,
             },
           },
         },

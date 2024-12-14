@@ -41,3 +41,170 @@ db2openapi -t postgres -h aws-0-us-west-1.pooler.supabase.com -p 5432 -u postgre
 | `-P` or `--password` | Y        | Database password                                           |
 | `-d` or `--database` | Y        | Database name                                               |
 | `-o` or `--output`   | N        | Output file for the OpenAPI document. Default: openapi.json |
+
+The output OpenAPI file will have CRUD endpoints (Ex. GET, GET all, POST, PATCH, DELETE) generated for you, alongside an OpenAPI component that describes your table using JSON schema. Here's an example:
+
+Some things to note:
+
+- The primary key is assumed to be the only key usable for lookups
+- The primary key is marked `readonly` as to not be included in mutating (ex. POST) requests
+- The `format` property is used to hint at underlying types
+
+```json
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Generated API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/products": {
+      "get": {
+        "summary": "Get list of products",
+        "responses": {
+          "200": {
+            "description": "A list of products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Products"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new product",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Products"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "product created successfully"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "summary": "Get a specific product by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "product not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a specific product by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Products"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "product updated successfully"
+          },
+          "404": {
+            "description": "product not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific product by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "product deleted successfully"
+          },
+          "404": {
+            "description": "product not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Products": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "default": null,
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "default": null
+          },
+          "image_url": {
+            "type": ["string", "null"],
+            "default": null
+          },
+          "category_id": {
+            "type": ["integer", "null"],
+            "format": "int32",
+            "default": null
+          }
+        },
+        "required": ["id", "name"]
+      }
+    }
+  }
+}
+```
