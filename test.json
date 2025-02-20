@@ -1,0 +1,814 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Generated API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/initiatives": {
+      "get": {
+        "summary": "Get list of Initiatives",
+        "responses": {
+          "200": {
+            "description": "A list of Initiatives",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Initiatives"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Initiative",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Initiatives"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Initiative created successfully"
+          }
+        }
+      }
+    },
+    "/initiatives/{id}": {
+      "get": {
+        "summary": "Get a specific Initiative by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single Initiative",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Initiatives"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Initiative not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a specific Initiative by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Initiatives"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Initiative updated successfully"
+          },
+          "404": {
+            "description": "Initiative not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific Initiative by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Initiative deleted successfully"
+          },
+          "404": {
+            "description": "Initiative not found"
+          }
+        }
+      }
+    },
+    "/key-results": {
+      "get": {
+        "summary": "Get list of KeyResults",
+        "responses": {
+          "200": {
+            "description": "A list of KeyResults",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/KeyResults"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new KeyResult",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KeyResults"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "KeyResult created successfully"
+          }
+        }
+      }
+    },
+    "/key-results/{id}": {
+      "get": {
+        "summary": "Get a specific KeyResult by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single KeyResult",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KeyResults"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "KeyResult not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a specific KeyResult by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KeyResults"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "KeyResult updated successfully"
+          },
+          "404": {
+            "description": "KeyResult not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific KeyResult by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "KeyResult deleted successfully"
+          },
+          "404": {
+            "description": "KeyResult not found"
+          }
+        }
+      }
+    },
+    "/objectives": {
+      "get": {
+        "summary": "Get list of Objectives",
+        "responses": {
+          "200": {
+            "description": "A list of Objectives",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Objectives"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Objective",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Objectives"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Objective created successfully"
+          }
+        }
+      }
+    },
+    "/objectives/{id}": {
+      "get": {
+        "summary": "Get a specific Objective by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single Objective",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Objectives"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Objective not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a specific Objective by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Objectives"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Objective updated successfully"
+          },
+          "404": {
+            "description": "Objective not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific Objective by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Objective deleted successfully"
+          },
+          "404": {
+            "description": "Objective not found"
+          }
+        }
+      }
+    },
+    "/track": {
+      "get": {
+        "summary": "Get list of Tracks",
+        "responses": {
+          "200": {
+            "description": "A list of Tracks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Track"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Track",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Track"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Track created successfully"
+          }
+        }
+      }
+    },
+    "/track/{id}": {
+      "get": {
+        "summary": "Get a specific Track by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single Track",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Track"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Track not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a specific Track by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Track"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Track updated successfully"
+          },
+          "404": {
+            "description": "Track not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific Track by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Track deleted successfully"
+          },
+          "404": {
+            "description": "Track not found"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "summary": "Get list of Users",
+        "responses": {
+          "200": {
+            "description": "A list of Users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "summary": "Get a specific User by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single User",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a specific User by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific User by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Initiatives": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "default": null,
+            "readOnly": true
+          },
+          "keyResultId": {
+            "type": "integer",
+            "format": "int32",
+            "default": null
+          },
+          "initiative": {
+            "type": ["string", "null"],
+            "default": null
+          }
+        },
+        "required": [
+          "id",
+          "keyResultId"
+        ]
+      },
+      "KeyResults": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "default": null,
+            "readOnly": true
+          },
+          "objectiveId": {
+            "type": "integer",
+            "format": "int32",
+            "default": null
+          },
+          "title": {
+            "type": "string",
+            "default": null
+          },
+          "goal": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "rule": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "id",
+          "objectiveId",
+          "title"
+        ]
+      },
+      "Objectives": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "default": null,
+            "readOnly": true
+          },
+          "dest": {
+            "type": "string",
+            "default": null
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32",
+            "default": null
+          }
+        },
+        "required": [
+          "id",
+          "dest",
+          "userId"
+        ]
+      },
+      "Track": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "default": null,
+            "readOnly": true
+          },
+          "keyResultId": {
+            "type": "integer",
+            "format": "int32",
+            "default": null
+          },
+          "discriminator": {
+            "type": "string",
+            "default": null
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "default": null
+          },
+          "value": {
+            "type": "object",
+            "default": null
+          }
+        },
+        "required": [
+          "id",
+          "keyResultId",
+          "discriminator",
+          "date",
+          "value"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "default": null,
+            "readOnly": true
+          },
+          "firstName": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "lastName": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "email": {
+            "type": "string",
+            "default": null
+          },
+          "password": {
+            "type": "string",
+            "default": null
+          },
+          "role": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "teamId": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "bio": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "password"
+        ]
+      }
+    }
+  }
+}

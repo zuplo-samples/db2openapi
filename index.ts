@@ -104,13 +104,10 @@ const generateOpenAPIDocument = async (
       }
       schema.required = required;
 
-      openApiDocument.components = {};
-      openApiDocument.components.schemas = {};
-      openApiDocument.components.schemas[modelNameUpperCamelCase] = schema;
+      (openApiDocument.components!.schemas!)[modelNameUpperCamelCase] = schema;
 
       // Define CRUD endpoints for each model
-      openApiDocument.paths = {};
-      openApiDocument.paths[`/${modelNameKebabCase}`] = {
+      (openApiDocument.paths!)[`/${modelNameKebabCase}`] = {
         get: {
           summary: `Get list of ${modelNamePlural}`,
           responses: {
@@ -148,7 +145,7 @@ const generateOpenAPIDocument = async (
         },
       };
 
-      openApiDocument.paths[`/${modelNameKebabCase}/{${primaryKey}}`] = {
+      (openApiDocument.paths!)[`/${modelNameKebabCase}/{${primaryKey}}`] = {
         get: {
           summary: `Get a specific ${modelNameSingular} by ${primaryKey}`,
           parameters: [
