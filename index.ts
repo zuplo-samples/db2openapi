@@ -88,8 +88,11 @@ const generateOpenAPIDocument = async (
           };
         } else {
           schema.properties[attributeName] = {
-            type: attribute.allowNull ? [type, "null"] : type,
-            format: mapSequelizeTypeToFormat(attribute.type),
+            [attribute.allowNull ? "oneOf" : "type"]: attribute.allowNull ? [{
+              type: type,
+              format: mapSequelizeTypeToFormat(attribute.type)
+            }, {type: "null"}] : type,
+            format: attribute.allowNull ? undefined : mapSequelizeTypeToFormat(attribute.type),
             default: attribute.defaultValue,
             description: attribute.comment ?? undefined,
             readOnly: attribute.primaryKey ? true : undefined,
