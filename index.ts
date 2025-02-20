@@ -93,6 +93,7 @@ const generateOpenAPIDocument = async (
               format: mapSequelizeTypeToFormat(attribute.type)
             }, {type: "null"}] : type,
             format: attribute.allowNull ? undefined : mapSequelizeTypeToFormat(attribute.type),
+            enum: attribute.type.includes('ENUM') ? (attribute.type.match(/'([^']+)'/g) ?? []).map(match => match.slice(1, -1)) : undefined,
             default: attribute.defaultValue,
             description: attribute.comment ?? undefined,
             readOnly: attribute.primaryKey ? true : undefined,

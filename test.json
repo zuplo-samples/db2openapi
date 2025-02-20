@@ -613,7 +613,14 @@
             "default": null
           },
           "initiative": {
-            "type": ["string", "null"],
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "default": null
           }
         },
@@ -777,6 +784,10 @@
               {
                 "type": "null"
               }
+            ],
+            "enum": [
+              "ADMIN",
+              "USER"
             ],
             "default": null
           },
