@@ -90,6 +90,7 @@ const generateOpenAPIDocument = async (
           schema.properties[attributeName] = {
             type: attribute.allowNull ? [type, "null"] : type,
             format: mapSequelizeTypeToFormat(attribute.type),
+            enum: attribute.type.includes('ENUM') ? (attribute.type.match(/'([^']+)'/g) ?? []).map(match => match.slice(1, -1)) : undefined,
             default: attribute.defaultValue,
             description: attribute.comment ?? undefined,
             readOnly: attribute.primaryKey ? true : undefined,
@@ -104,13 +105,10 @@ const generateOpenAPIDocument = async (
       }
       schema.required = required;
 
-      openApiDocument.components = {};
-      openApiDocument.components.schemas = {};
-      openApiDocument.components.schemas[modelNameUpperCamelCase] = schema;
+      (openApiDocument.components!.schemas!)[modelNameUpperCamelCase] = schema;
 
       // Define CRUD endpoints for each model
-      openApiDocument.paths = {};
-      openApiDocument.paths[`/${modelNameKebabCase}`] = {
+      (openApiDocument.paths!)[`/${modelNameKebabCase}`] = {
         get: {
           summary: `Get list of ${modelNamePlural}`,
           responses: {
@@ -148,7 +146,7 @@ const generateOpenAPIDocument = async (
         },
       };
 
-      openApiDocument.paths[`/${modelNameKebabCase}/{${primaryKey}}`] = {
+      (openApiDocument.paths!)[`/${modelNameKebabCase}/{${primaryKey}}`] = {
         get: {
           summary: `Get a specific ${modelNameSingular} by ${primaryKey}`,
           parameters: [
