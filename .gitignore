@@ -20,7 +20,7 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
+coverage/
 *.lcov
 
 # nyc test coverage
@@ -131,4 +131,6 @@ dist
 
 # other
 openapi.json
-bin
+dist
+openapi-from-ddl.json
+__tests__/*.js

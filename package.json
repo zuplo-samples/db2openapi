@@ -2,13 +2,23 @@
   "name": "db2openapi",
   "version": "1.0.0",
   "description": "Generate an OpenAPI/Swagger specification from your SQL database",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "test",
-    "build": "tsc"
+    "test": "jest --passWithNoTests",
+    "test:cov": "jest --coverage --coverageDirectory=coverage --testPathIgnorePatterns='/__tests__/.*\\.int\\.test\\.ts$'",
+    "test:unit": "jest --passWithNoTests --testPathIgnorePatterns='/__tests__/.*\\.int\\.test\\.ts$'",
+    "test:integration": "jest --passWithNoTests --testPathPattern='.*\\.int\\.test\\.ts$'",
+    "fix-cov-paths": "node ./scripts/fix-lcov-paths.js",
+    "posttest:cov": "npm run fix-cov-paths",
+    "build": "tsc",
+    "build:clean": "npm run clean && npm run build",
+    "examples": "make examples",
+    "clean:examples": "node ./scripts/clean-examples.js",
+    "clean": "rimraf dist",
+    "prepare": "npm run build"
   },
   "bin": {
-    "db2openapi": "./bin/index.js"
+    "db2openapi": "./dist/cli.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +37,10 @@
   },
   "homepage": "https://github.com/zuplo-samples/db2openapi#readme",
   "devDependencies": {
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "jest": "^29.6.1",
+    "ts-jest": "^29.1.0",
+    "@types/jest": "^29.5.3"
   },
   "dependencies": {
     "@types/node": "^22.9.1",

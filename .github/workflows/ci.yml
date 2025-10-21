@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, gen-response-examples ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm ci
+      - name: Build (clean)
+        run: npm run build:clean
+      - name: Run tests
+        run: npm test
+      - name: Clean example outputs
+        run: npm run clean:examples
+
+  integration-postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm ci
+      - name: Wait for Postgres
+        run: npx wait-on tcp:5432
+      - name: Build (clean)
+        run: npm run build:clean
+      - name: Run integration tests against Postgres
+        env:
+          DB_TYPE: postgres
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          DB_DATABASE: testdb
+        run: npm run test:integration
+      - name: Clean example outputs
+        run: npm run clean:examples
+
+  parity-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm ci
+      - name: Build (clean)
+        run: npm run build:clean
+      - name: Run SqlType parity unit test
+        run: npx jest __tests__/sqltype.sync.test.ts --runInBand
+      - name: Clean example outputs
+        run: npm run clean:examples
